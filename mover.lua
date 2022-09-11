@@ -90,18 +90,17 @@ local function moveForward() -- Returns stuck
   local triedDown = false
   local deltaDown = 0
   local triedLeft = false
-  local maxLeft = 6
+  local maxLeft = 8
 
   while not canMoveForward do
     if not triedUp then
       local canMoveUp = canMove(sides.up)
-      if canMoveUp then
-        r.move(sides.up)
+      if canMoveUp and r.move(sides.up) then
         updatePos(sides.up)
         deltaUp = deltaUp + 1
       else
         triedUp = true
-        for i=0, deltaUp, 1 
+        for i=1, deltaUp, 1 
         do
           r.move(sides.down)
           updatePos(sides.down)
@@ -109,13 +108,12 @@ local function moveForward() -- Returns stuck
       end
     elseif not triedDown then
       local canMoveDown = canMove(sides.down)
-      if canMoveDown then
-        r.move(sides.down)
+      if canMoveDown and r.move(sides.down) then
         updatePos(sides.down)
         deltaDown = deltaDown + 1
       else
         triedDown = true
-        for i=0, deltaDown, 1 
+        for i=1, deltaDown, 1 
         do
           r.move(sides.up)
           updatePos(sides.up)
@@ -123,8 +121,7 @@ local function moveForward() -- Returns stuck
       end
     elseif not triedLeft then
       r.turn(false)
-      if canMove(sides.front) then
-        r.move(sides.front)
+      if canMove(sides.front) and r.move(sides.front) then
         facing = mover:getFacing()
         updatePos(facing)
         r.turn(true)
@@ -144,9 +141,7 @@ local function moveForward() -- Returns stuck
     canMoveForward = canMove(sides.front)
   end
 
-  if canMoveForward then
-    local res = r.move(sides.front)
-    print("Result: " .. res)
+  if canMoveForward and r.move(sides.front) then
     updatePos(facing)
     return false
   else
