@@ -145,7 +145,8 @@ local function moveForward() -- Returns stuck
   end
 
   if canMoveForward then
-    print(r.move(sides.front))
+    local res = r.move(sides.front)
+    print("Result: " .. res)
     updatePos(facing)
     return false
   else
