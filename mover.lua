@@ -94,7 +94,7 @@ local function moveForward() -- Returns stuck
 
   while not canMoveForward do
     if not triedUp then
-      local canMoveUp = canMove(sides.top)
+      local canMoveUp = canMove(sides.up)
       if canMoveUp then
         r.move(sides.up)
         updatePos(sides.up)
@@ -145,7 +145,7 @@ local function moveForward() -- Returns stuck
   end
 
   if canMoveForward then
-    r.move(sides.front)
+    print(r.move(sides.front))
     updatePos(facing)
     return false
   else
