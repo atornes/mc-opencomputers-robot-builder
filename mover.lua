@@ -81,7 +81,7 @@ local function canMove(side)
   return not canNotMove
 end
 
-local function moveForward()
+local function moveForward() -- Returns stuck
   local facing = mover:getFacing()
   local canMoveForward = canMove(sides.front)
   
@@ -147,10 +147,10 @@ local function moveForward()
   if canMoveForward then
     r.move(sides.front)
     updatePos(facing)
-    return true
+    return false
   else
     print("Stuck!!!!")
-    return false
+    return true
   end
 end
 
