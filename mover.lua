@@ -8,7 +8,7 @@ local comp = require("component")
 local sides = require("sides")
 local nav = comp.navigation
 local r = comp.robot
-  
+
 function mover:init()
   local x,y,z = nav.getPosition()
   pos_x = math.floor(x)
@@ -35,9 +35,9 @@ local function getTargetFacingSide(source_x, source_z, target_x, target_z)
   local diff_z = target_z - source_z
   local dir1 = diff_x > 0 and sides.posx or sides.negx
   local dir2 = diff_z > 0 and sides.posz or sides.negz
-  
+
   local angle = getAngle(source_x, source_z, target_x, target_z)
-  
+
   return angle < math.pi / 4 and dir2 or dir1
 end
 
@@ -92,8 +92,7 @@ local function moveForward()
   local triedLeft = false
   local maxLeft = 6
   
-  while not canMoveForward 
-  do  
+  while not canMoveForward do
     if not triedUp then
       local canMoveUp = canMove(sides.top)
       if canMoveUp then
@@ -108,7 +107,7 @@ local function moveForward()
           updatePos(sides.down)
         end
       end
-    else if not triedDown then
+    elseif not triedDown then
       local canMoveDown = canMove(sides.down)
       if canMoveDown then
         r.move(sides.down)
@@ -122,14 +121,14 @@ local function moveForward()
           updatePos(sides.up)
         end
       end
-    else if not triedLeft then
+    elseif not triedLeft then
       r.turn(false)
       if canMove(sides.front) then
         r.move(sides.front)
         facing = mover:getFacing()
         updatePos(facing)
         r.turn(true)
-        
+
         maxLeft = maxLeft - 1
         if maxLeft == 0 then
           triedLeft = true
