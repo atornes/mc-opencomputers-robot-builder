@@ -91,7 +91,7 @@ local function moveForward()
   local deltaDown = 0
   local triedLeft = false
   local maxLeft = 6
-  
+
   while not canMoveForward do
     if not triedUp then
       local canMoveUp = canMove(sides.top)
@@ -147,8 +147,10 @@ local function moveForward()
   if canMoveForward then
     r.move(sides.front)
     updatePos(facing)
+    return true
   else
     print("Stuck!!!!")
+    return false
   end
 end
 
@@ -160,8 +162,11 @@ function mover:moveTo(x, y, z)
       local facing = mover:getFacing()
       turnTo(facing, turn_to)
       
-      moveForward()
-      
+      local stuck = moveForward()
+      if stuck then
+        break
+      end
+
       cx, cy, cz = mover:getPos()
     end
     
@@ -173,6 +178,7 @@ function mover:moveTo(x, y, z)
           updatePos(sides.down)
         else
           print("Stuck down!!")
+          break
         end
       elseif cy < y then
         if canMove(sides.up) then
@@ -180,6 +186,7 @@ function mover:moveTo(x, y, z)
           updatePos(sides.up)
         else
           print("Stuck up!!")
+          break
         end
       end
       
